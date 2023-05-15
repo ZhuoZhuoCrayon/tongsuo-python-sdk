@@ -97,7 +97,7 @@ jobs:
           else
             exit 0
           fi
-      - run: .venv/bin/pip install tongsuopy --no-index -f wheelhouse/
+      - run: .venv/bin/pip install tongsuopy-crayon --no-index -f wheelhouse/
       - run: |
           .venv/bin/python -c "from tongsuopy.backends.tongsuo.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
       - run: mkdir tongsuopy-wheelhouse
@@ -191,7 +191,7 @@ jobs:
           MACOSX_DEPLOYMENT_TARGET: ${{ matrix.PYTHON.DEPLOYMENT_TARGET }}
           ARCHFLAGS: ${{ matrix.PYTHON.ARCHFLAGS }}
           _PYTHON_HOST_PLATFORM: ${{ matrix.PYTHON._PYTHON_HOST_PLATFORM }}
-      - run: venv/bin/pip install -f wheelhouse --no-index tongsuopy
+      - run: venv/bin/pip install -f wheelhouse --no-index tongsuopy-crayon
       - name: Show the wheel's minimum macOS SDK and architectures
         run: |
           find venv/lib/*/site-packages/tongsuopy/backends -name '*.so' -exec vtool -show {} \;
@@ -270,7 +270,7 @@ jobs:
       - run: tar zxvf tongsuopy*.tar.gz && mkdir wheelhouse
         shell: bash
       - run: cd tongsuopy* && python setup.py bdist_wheel --py-limited-api=${{ matrix.PYTHON.ABI_VERSION }} && mv dist/tongsuopy*.whl ../wheelhouse
-      - run: pip install -f wheelhouse --no-index tongsuopy
+      - run: pip install -f wheelhouse --no-index tongsuopy-crayon
       - name: Print the OpenSSL we built and linked against
         run: |
             python -c "from tongsuopy.backends.tongsuo.backend import backend;print('Loaded: ' + backend.openssl_version_text());print('Linked Against: ' + backend._ffi.string(backend._lib.OPENSSL_VERSION_TEXT).decode('ascii'))"
