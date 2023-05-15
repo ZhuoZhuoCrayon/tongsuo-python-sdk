@@ -18,6 +18,8 @@ concurrency:
 
 jobs:
   linux:
+    # 该 workflow 已暂停使用
+    if: ${{ false }}
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
@@ -71,6 +73,8 @@ jobs:
       - uses: ./.github/actions/upload-coverage
 
   macos:
+    # 该 workflow 已暂停使用
+    if: ${{ false }}
     runs-on: macos-12
     strategy:
       fail-fast: false
@@ -118,6 +122,8 @@ jobs:
       - uses: ./.github/actions/upload-coverage
 
   windows:
+    # 该 workflow 已暂停使用
+    if: ${{ false }}
     runs-on: windows-latest
     strategy:
       fail-fast: false
