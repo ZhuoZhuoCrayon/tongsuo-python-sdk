@@ -12,6 +12,9 @@ RUN \
       rm -rf /var/cache/yum; \
     elif stat /etc/debian_version 1>&2 2>/dev/null; then \
       export DEBIAN_FRONTEND=noninteractive && \
+      sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list && \
+      sed -i 's|security.debian.org|archive.debian.org/|g' /etc/apt/sources.list && \
+      sed -i '/stretch-updates/d' /etc/apt/sources.list && \
       apt-get update -qq && \
       apt-get install -qq -y --no-install-recommends wget prelink && \
       apt-get clean -qq && \
@@ -32,6 +35,9 @@ RUN \
       rm -rf /var/cache/yum; \
     elif stat /etc/debian_version 1>&2 2>/dev/null; then \
       export DEBIAN_FRONTEND=noninteractive && \
+      sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list && \
+      sed -i 's|security.debian.org|archive.debian.org/|g' /etc/apt/sources.list && \
+      sed -i '/stretch-updates/d' /etc/apt/sources.list && \
       apt-get update -qq && \
       apt-get install -qq -y --no-install-recommends libffi-dev && \
       apt-get clean -qq && \
