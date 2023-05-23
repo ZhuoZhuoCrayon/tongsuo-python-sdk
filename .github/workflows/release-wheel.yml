@@ -10,7 +10,7 @@ on:
 env:
   TONGSUO_VERSION: 8.3.2
   INNER_WORKSPACE: /workspace
-  INNER_BUILD_DIR: /build1
+  INNER_BUILD_DIR: /build
 
 jobs:
   sdist:
@@ -154,7 +154,7 @@ jobs:
           # Mount the artifacts directory as /artifacts in the container
           dockerRunArgs: |
             --volume "${{ github.workspace }}:${{ env.INNER_WORKSPACE }}"
-            --volume "${{ runner.temp }}:/build"
+            --volume "${{ runner.temp }}:${{ env.INNER_BUILD_DIR }}"
 
           # Pass some environment variables to the container
           env: |

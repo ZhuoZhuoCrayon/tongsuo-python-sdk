@@ -39,7 +39,7 @@ RUN \
       sed -i 's|security.debian.org|archive.debian.org/|g' /etc/apt/sources.list && \
       sed -i '/stretch-updates/d' /etc/apt/sources.list && \
       apt-get update -qq && \
-      apt-get install -qq -y --no-install-recommends libffi-dev && \
+      apt-get install -qq -y --no-install-recommends libffi-dev wget prelink && \
       apt-get clean -qq && \
       rm -rf /var/lib/apt/lists/*; \
     else \
