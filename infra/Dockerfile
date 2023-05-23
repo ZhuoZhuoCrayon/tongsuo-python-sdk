@@ -30,7 +30,7 @@ RUN \
   if [ $(uname -m) = "aarch64" ]; \
   then \
     if stat /etc/redhat-release 1>&2 2>/dev/null; then \
-      yum -y install libffi-devel perl-IPC-Cmd && \
+      yum -y install libffi-devel perl-IPC-Cmd wget && \
       yum -y clean all && \
       rm -rf /var/cache/yum; \
     elif stat /etc/debian_version 1>&2 2>/dev/null; then \
