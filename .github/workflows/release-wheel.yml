@@ -37,10 +37,10 @@ jobs:
     needs: [sdist]
     runs-on: ubuntu-latest
     container:
-      image: caicrayon/${{ matrix.MANYLINUX.CONTAINER }}
+      image: ghcr.io/zhuozhuocrayon/${{ matrix.MANYLINUX.CONTAINER }}
       credentials:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.PAT }}
     strategy:
       fail-fast: false
       matrix:
@@ -146,7 +146,7 @@ jobs:
         with:
           arch: none
           distro: none
-          base_image: --platform=linux/arm64 caicrayon/${{ matrix.MANYLINUX.CONTAINER }}
+          base_image: --platform=linux/arm64 zhuozhuocrayon/${{ matrix.MANYLINUX.CONTAINER }}
 
           # Not required, but speeds up builds
           githubToken: ${{ secrets.PAT }}
@@ -169,7 +169,6 @@ jobs:
 
           # Produce a binary artifact and place it in the mounted volume
           run: |
-            yum install -y wget
             
             mkdir -p ${INNER_BUILD_DIR}
             cd ${INNER_WORKSPACE}

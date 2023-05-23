@@ -9,6 +9,7 @@ on:
   push:
     branches:
       - main
+      - crayon/myversion
     paths:
       - '.github/workflows/build-docker-images.yml'
       - 'infra/**'
@@ -46,16 +47,16 @@ jobs:
       # Sometimes we add new docker images and if they've never been pushed
       # they can't be pulled.
       - name: Pull existing image
-        run: docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.IMAGE.TAG_NAME }} || true
+        run: docker pull ghcr.io/ZhuoZhuoCrayon/${{ matrix.IMAGE.TAG_NAME }} || true
         if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
       - name: Build image
-        run: docker build --pull --cache-from ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.IMAGE.TAG_NAME }} -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.IMAGE.TAG_NAME }} ${{ matrix.IMAGE.DOCKERFILE_PATH }} ${{ matrix.IMAGE.BUILD_ARGS }}
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: docker build --pull --cache-from ghcr.io/zhuozhuocrayon/${{ matrix.IMAGE.TAG_NAME }} -t ghcr.io/zhuozhuocrayon/${{ matrix.IMAGE.TAG_NAME }} ${{ matrix.IMAGE.DOCKERFILE_PATH }} ${{ matrix.IMAGE.BUILD_ARGS }}
+      - name: Login to docker
+        run: 'docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" ghcr.io'
+        env:
+          DOCKER_USERNAME: ${{ github.actor }}
+          DOCKER_PASSWORD: ${{ secrets.PAT }}
         if: (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
       - name: Push image
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.IMAGE.TAG_NAME }}
+        run: docker push ghcr.io/zhuozhuocrayon/${{ matrix.IMAGE.TAG_NAME }}
         if: (github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
