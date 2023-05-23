@@ -146,7 +146,7 @@ jobs:
         with:
           arch: none
           distro: none
-          base_image: --platform=linux/arm64 zhuozhuocrayon/${{ matrix.MANYLINUX.CONTAINER }}
+          base_image: --platform=linux/arm64 ghcr.io/zhuozhuocrayon/${{ matrix.MANYLINUX.CONTAINER }}
 
           # Not required, but speeds up builds
           githubToken: ${{ secrets.PAT }}
