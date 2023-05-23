@@ -187,7 +187,7 @@ jobs:
             
             
             cd ${INNER_BUILD_DIR}
-            /opt/python/${{ PYTHON_VERSION }}/bin/python -m venv .venv
+            /opt/python/${PYTHON_VERSION}/bin/python -m venv .venv
             .venv/bin/pip install -U pip wheel cffi
             
             
