@@ -158,14 +158,14 @@ jobs:
 
           # Pass some environment variables to the container
           env: |
-            INNER_WORKSPACE: ${{ env.INNER_WORKSPACE }}
+            INNER_WORKSPACE: "${{ env.INNER_WORKSPACE }}"
             # TODO 担心挂载目录作为构建层目录会严重影响构建速度，暂时不这么做
-            INNER_BUILD_DIR: ${{ env.INNER_BUILD_DIR }}
-            TONGSUO_VERSION: ${{ env.TONGSUO_VERSION }}
-            TONGSUO_HOME: ${{ env.BUILD_DIR }}/tongsuo${{ env.TONGSUO_VERSION }}
+            INNER_BUILD_DIR: "${{ env.INNER_BUILD_DIR }}"
+            TONGSUO_VERSION: "${{ env.TONGSUO_VERSION }}"
+            TONGSUO_HOME: "${{ env.BUILD_DIR }}/tongsuo${{ env.TONGSUO_VERSION }}"
             PYTHON_VERSION: ${{ matrix.PYTHON.VERSION }}
-            PYTHON_ABI_VERSION: ${{ matrix.PYTHON.ABI_VERSION }}
-            MANYLINUX_NAME: ${{ matrix.MANYLINUX.NAME }}
+            PYTHON_ABI_VERSION: "${{ matrix.PYTHON.ABI_VERSION }}"
+            MANYLINUX_NAME: "${{ matrix.MANYLINUX.NAME }}"
 
           # Produce a binary artifact and place it in the mounted volume
           run: |
