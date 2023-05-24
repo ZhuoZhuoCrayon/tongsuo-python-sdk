@@ -54,12 +54,7 @@ jobs:
         if: github.event_name != 'schedule' && github.event_name != 'workflow_dispatch'
       - name: Build image
         run: |
-          docker build --pull \
-                       --cache-from ghcr.io/zhuozhuocrayon/${{ matrix.IMAGE.TAG_NAME }} \
-                       -t ghcr.io/zhuozhuocrayon/${{ matrix.IMAGE.TAG_NAME }} \ 
-                       --build-arg PYCA_RELEASE=${{ matrix.IMAGE.TAG_NAME }} \
-                       --build-arg TONGSUO_VERSION=${TONGSUO_VERSION} \
-                       --build-arg TONGSUO_HOME=/opt/tongsuo${TONGSUO_VERSION} ${{ matrix.IMAGE.DOCKERFILE_PATH }}
+          docker build --pull --cache-from ghcr.io/zhuozhuocrayon/${{ matrix.IMAGE.TAG_NAME }} -t ghcr.io/zhuozhuocrayon/${{ matrix.IMAGE.TAG_NAME }} --build-arg PYCA_RELEASE=${{ matrix.IMAGE.TAG_NAME }} --build-arg TONGSUO_VERSION=${TONGSUO_VERSION} --build-arg TONGSUO_HOME=/opt/tongsuo${TONGSUO_VERSION} ${{ matrix.IMAGE.DOCKERFILE_PATH }}
       - name: Login to docker
         run: 'docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" ghcr.io'
         env:
