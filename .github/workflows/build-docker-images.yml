@@ -30,7 +30,7 @@ jobs:
       matrix:
         IMAGE:
           - {TAG_NAME: "tongsuopy-manylinux2014:x86_64", DOCKERFILE_PATH: "infra", RUNNER: "ubuntu-20.04"}
-          - {TAG_NAME: "tongsuopy-manylinux_2_24:x86_64", DOCKERFILE_PATH: "infra",, RUNNER: "ubuntu-20.04"}
+          - {TAG_NAME: "tongsuopy-manylinux_2_24:x86_64", DOCKERFILE_PATH: "infra", RUNNER: "ubuntu-20.04"}
           - {TAG_NAME: "tongsuopy-manylinux_2_28:x86_64", DOCKERFILE_PATH: "infra", RUNNER: "ubuntu-20.04"}
           - {TAG_NAME: "tongsuopy-musllinux_1_1:x86_64", DOCKERFILE_PATH: "infra", RUNNER: "ubuntu-20.04"}
           - { TAG_NAME: "tongsuopy-manylinux2014:aarch64", DOCKERFILE_PATH: "infra", RUNNER: "ubuntu-20.04" }
