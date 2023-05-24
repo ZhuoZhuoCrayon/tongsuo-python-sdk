@@ -59,8 +59,6 @@ RUN \
 
 # build tongsuo
 RUN set -ex && \
-    mkdir -p ${TONGSUO_HOME} && \
-    cd ${TONGSUO_HOME} && \
     wget "https://github.com/Tongsuo-Project/Tongsuo/archive/refs/tags/${TONGSUO_VERSION}.tar.gz" && \
     tar zxf "${TONGSUO_VERSION}.tar.gz"
 
