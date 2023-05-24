@@ -165,7 +165,7 @@ jobs:
               PY_LIMITED_API="--py-limited-api=${PYTHON_ABI_VERSION}"
             fi
             cd tongsuopy*
-            ${INNER_BUILD_DIR}/.venv/bin/python setup.py bdist_wheel $PY_LIMITED_API && mv dist/tongsuopy*.whl ../tmpwheelhouse
+            ${INNER_BUILD_DIR}/.venv/bin/python setup.py bdist_wheel $PYTHON_ABI_VERSION && mv dist/tongsuopy*.whl ../tmpwheelhouse
             
             
             cd ${INNER_WORKSPACE}
