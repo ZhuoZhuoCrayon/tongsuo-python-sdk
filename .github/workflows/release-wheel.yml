@@ -64,19 +64,6 @@ jobs:
       - uses: actions/download-artifact@v3.0.1
         with:
           name: tongsuopy-sdist
-      - name: Set TONGSUO_HOME
-        shell: bash
-        run: echo "TONGSUO_HOME=${GITHUB_WORKSPACE}/tongsuo${TONGSUO_VERSION}" >> $GITHUB_ENV
-      - name: Build Tongsuo
-        working-directory: ${{ runner.temp }}
-        run: |
-          wget "https://github.com/Tongsuo-Project/Tongsuo/archive/refs/tags/${TONGSUO_VERSION}.tar.gz"
-          tar zxf "${TONGSUO_VERSION}.tar.gz"
-          cd "Tongsuo-${TONGSUO_VERSION}"
-          ./config no-shared enable-ntls --release --prefix=${TONGSUO_HOME}
-          make -s -j4
-          make install_sw
-          cd -
       - run: /opt/python/${{ matrix.PYTHON.VERSION }}/bin/python -m venv .venv
       - name: Install Python dependencies
         run: .venv/bin/pip install -U pip wheel cffi
@@ -161,30 +148,12 @@ jobs:
             INNER_WORKSPACE: "${{ env.INNER_WORKSPACE }}"
             # TODO 担心挂载目录作为构建层目录会严重影响构建速度，暂时不这么做
             INNER_BUILD_DIR: "${{ env.INNER_BUILD_DIR }}"
-            TONGSUO_VERSION: "${{ env.TONGSUO_VERSION }}"
-            TONGSUO_HOME: "${{ env.BUILD_DIR }}/tongsuo${{ env.TONGSUO_VERSION }}"
-            PYTHON_VERSION: ${{ matrix.PYTHON.VERSION }}
+            PYTHON_VERSION: "${{ matrix.PYTHON.VERSION }}"
             PYTHON_ABI_VERSION: "${{ matrix.PYTHON.ABI_VERSION }}"
             MANYLINUX_NAME: "${{ matrix.MANYLINUX.NAME }}"
 
           # Produce a binary artifact and place it in the mounted volume
           run: |
-            
-            mkdir -p ${INNER_BUILD_DIR}
-            cd ${INNER_WORKSPACE}
-            ls -al
-            
-            echo "Build Tongsuo"
-            cd ${INNER_BUILD_DIR}
-            wget "https://github.com/Tongsuo-Project/Tongsuo/archive/refs/tags/${TONGSUO_VERSION}.tar.gz"
-            tar zxf "${TONGSUO_VERSION}.tar.gz"
-            cd "Tongsuo-${TONGSUO_VERSION}"
-            ./config no-shared enable-ntls --release --prefix=${TONGSUO_HOME}
-            make -s -j4
-            make install_sw
-            echo "Build Tongsuo success"
-            
-            
             cd ${INNER_BUILD_DIR}
             /opt/python/${PYTHON_VERSION}/bin/python -m venv .venv
             .venv/bin/pip install -U pip wheel cffi

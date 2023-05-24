@@ -1,7 +1,12 @@
 ARG PYCA_RELEASE
+
 FROM quay.io/pypa/${PYCA_RELEASE}
-ARG PYCA_RELEASE
 MAINTAINER Tongsuo Project Authors
+ARG PYCA_RELEASE
+ARG TONGSUO_HOME
+ARG TONGSUO_VERSION
+ENV TONGSUO_HOME=${TONGSUO_HOME}
+ENV TONGSUO_VERSION=${TONGSUO_VERSION}
 WORKDIR /root
 RUN \
   if [ $(uname -m) = "x86_64" ]; \
@@ -51,3 +56,16 @@ RUN \
       apk add --no-cache gcompat; \
     fi; \
   fi
+
+# build tongsuo
+RUN set -ex && \
+    mkdir -p ${TONGSUO_HOME} && \
+    cd ${TONGSUO_HOME} && \
+    wget "https://github.com/Tongsuo-Project/Tongsuo/archive/refs/tags/${TONGSUO_VERSION}.tar.gz" && \
+    tar zxf "${TONGSUO_VERSION}.tar.gz"
+
+RUN set -ex && \
+    cd "Tongsuo-${TONGSUO_VERSION}" && \
+    ./config no-shared enable-ntls --release --prefix=${TONGSUO_HOME} && \
+    make -s -j4 && \
+    make install_sw
